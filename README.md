@@ -2,7 +2,7 @@
 
 Team:
 
-* Person 1 - Which microservice?
+* John Agni - Sales Microservice/Inventory Lists
 * Person 2 - Which microservice?
 
 ## Design
