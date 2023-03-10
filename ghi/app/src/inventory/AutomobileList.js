@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 class AutomobileList extends React.Component {
     constructor(props) {
@@ -36,9 +35,9 @@ class AutomobileList extends React.Component {
                         {this.state.autos.map(auto => {
                             return (
                                 <tr key={auto.id}>
+                                    <td>{auto.vin}</td>
                                     <td>{auto.color}</td>
                                     <td>{auto.year}</td>
-                                    <td>{auto.vin}</td>
                                     <td>{auto.model.name}</td>
                                     <td>{auto.model.manufacturer.name}</td>
                                 </tr>
