@@ -1,4 +1,5 @@
 # CarCar
+CarCar is a web application that allows car dealerships to manage their inventory, service, and sales
 
 Team:
 
@@ -16,7 +17,7 @@ Team:
 
 ## Instructions to run the project
 
-1. Go to https://gitlab.com/charlene.xu92/project-beta for the repo.
+1. Go to https://gitlab.com/charlene.xu92/project-beta and Fork the Repository
 2. Select the Clone option and copy the URL under HTTPS.
 3. In your terminal, enter `cd` to your projects directory.
 4. Enter the command: `git clone https://gitlab.com/charlene.xu92/project-beta`.
@@ -398,6 +399,104 @@ The Appointment model is also an entity because it has a life cycle (active, can
 
 
 ## Sales microservice
+The Sales microservice is responsible for managing sales data, which includes sales persons, customers, sales records, and inventory of automobiles. This microservice is divided into two applications - Sales API and Sales Poller.
+
+Sales API is a Django-based application that hosts the models, URLs, and views. It is accessible through Insomnia on port 8090.
+
+Sales Poller is a polling application that periodically requests automobile data from the Inventory API. It creates a new instance of the automobileVO in the Sales microservice database for every instance of the Automobile in the Inventory database.
+
+# AutomobileVO (Value Object)
+
+The AutomobileVO model is a value object. It is used to poll VIN data from the Inventory microservice. Those VINS are then used to create and manage sales of automobiles in the inventory.
+
+# Customer
+
+The customer model is a django model that represents a customer entity in the system. It has a foreign key relationship with the Sale model. Each sale object is associated with one customer object.
+
+| Actions      | Method | URL  | Required JSON |
+| :---        | :----       | :---          |  :---     |
+| List Customers   | GET       | http://localhost:8090/api/customers/  |       |
+| Create a Customer  | POST        | http://localhost:8090/api/customers/     |   `{"name": "Steve Jobs", "address": "One Apple Park Way, Cupertino, CA 95014", "phone_number": 5108521579}`    |
+
+To create a new customer go to Sales in the navigation bar and click Become a customer. Enter a name, address ()
+
+# Sales person
+
+The sales person model represents a salesperson entity in the system. It has a foreign key relationship with the Sale model . Each sale object is associated with one Salesperson object.
+
+# Sale
+
+The Sale model represents a sales record in the system, which captures information about a specific sale, the automobile sold, person who made the sale, and customer who bought the automobile. It has foreign key relationships with AutomobileVO, Salesperson, and Customer. Each object is associated with one automobile, one salesperson and optionally one customer object.
+
+# Sales RESTful APIs:
+
+Sales information
+| Actions      | Method | URL  | Required JSON |
+| :---        | :----       | :---          |  :---     |
+| List Sales People   | GET      | http://localhost:8090/api/salespeople/  |       |
+| Create a Sales Person | POST        | http://localhost:8090/api/salespeople/    | ***Note: employee_number max 5 digits.*** `{"name": "Bill Gates", "employee_number": 3655}`  |
+| List Customers   | GET       | http://localhost:8090/api/customers/  |       |
+| Create a Customer  | POST        | http://localhost:8090/api/customers/     |   `{"name": "Steve Jobs", "address": "One Apple Park Way", "phone_number": 5108521579}`    |
+| List Sales Records  | GET       | http://localhost:8090/api/sales/ |       |
+| Create a Sales Record  | POST       | http://localhost:8090/api/salesrecords/ |  `{"sale_price": 60000, "vin": "2FMDK3KC7BBA78129", "salesperson": 2, "customer": 1}`     |
+| Sales person history  | GET       |  http://localhost:8090/api/salesperson/<:id>/sales |       |
+
+
+
+
+
+| Action              | Method | URL                                    |
+| ------------------- | ------ | -------------------------------------- |
+| List customers   | GET    | http://localhost:8090/api/customers/ |
+| Create a customer | POST   | http://localhost:8090/api/customers/ |
+| List Sales people | GET   | http://localhost:8090/api/salespeople/ |
+| Create a sales person | POST   | http://localhost:8090/api/salespeople/ |
+| List all sales | GET   | http://localhost:8090/api/sales/ |
+| Sales person history | GET   | http://localhost:8090/api/salesperson/<:id>/sales |
+| Create a sale | POST   | http://localhost:8090/api/sales/ |
+
+## Sales Person:
+
+| Action              | Method | URL                                    |
+| ------------------- | ------ | -------------------------------------- |
+| List Sales people | GET   | http://localhost:8090/api/salespeople/ |
+| Create a sales person | POST   | http://localhost:8090/api/salespeople/ |
+
+Example JSON body input to create a new Sales Person:
+***Note: employee_number max 5 digits.***
+
+```
+{
+	"name": "Steve Jobs",
+	"employee_number": 365
+}
+
+```
+Example JSON body output after creation of new Sales Person:
+
+```
+
+{
+	"name": "Steve Jobs",
+	"employee_number": 365,
+	"id": 5
+}
+
+```
+
+
+
+## Customer:
+
+| Action              | Method | URL                                    |
+| ------------------- | ------ | -------------------------------------- |
+| List customers   | GET    | http://localhost:8090/api/customers/ |
+| Create a customer | POST   | http://localhost:8090/api/customers/ |
+
+## Sales Record:
+
+
+
 
 Explain your models and integration with the inventory
 microservice, here.

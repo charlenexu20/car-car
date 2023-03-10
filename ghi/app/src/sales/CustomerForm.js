@@ -72,7 +72,7 @@ function CustomerForm() {
                 value={address}
                 onChange={handleAddressChange}
                 placeholder="Address"
-                maxLength={30}
+                maxLength={100}
                 required
                 type="text"
                 name="address"

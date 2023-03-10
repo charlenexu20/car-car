@@ -136,7 +136,7 @@ return (
                             required name="vin"
                             id="vin"
                             className="form-select">
-                            <option value="">Choose a Automobile</option>
+                            <option value="">Choose an Automobile</option>
                             {filteredAutos && filteredAutos
                                 .map((auto, idx) => (
                                 <option key={idx} value={auto.vin}>
