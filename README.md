@@ -414,15 +414,45 @@ The AutomobileVO model is a value object. It is used by the Sales microservice t
 
 The customer model is a django model that represents a customer entity in the system. It has a foreign key relationship with the Sale model. Each sale object is associated with one customer object.
 
-| Actions      | Method | URL  | Example Required JSON |
-| :---        | :----       | :---          |  :---     |
-| List Customers   | GET       | http://localhost:8090/api/customers/  |       |
-| Create a Customer  | POST        | http://localhost:8090/api/customers/     |  ```json
+| Actions          | Method | URL                                    |
+|------------------|--------|----------------------------------------|
+| List Customers   | GET    | http://localhost:8090/api/customers/   |
+| Create a Customer| POST   | http://localhost:8090/api/customers/   |
+
+- Sample POST request for create view =>
+
+```
+
 {
-    "name": "Steve Jobs",
-    "address": "One Apple Park Way, Cupertino, CA 95014",
-    "phone_number": 5108521579
+	"name": "Steve Jobs",
+	"address": "1 Apple Park Way, Cupertino, CA 95014",
+	"phone_number": 5108521579
 }
+
+
+```
+
+- Sample GET for list view =>
+
+```
+[
+	{
+		"name": "Steve Jobs",
+	    "address": "1 Apple Park Way, Cupertino, CA 95014",
+	    "phone_number": 5108521579
+		"id": 1
+	},
+	{
+		"name": "Joe Biden",
+		"address": "1600 Pennsylvania Avenue NW, Washington, DC 20500",
+		"phone_number": 8081234567,
+		"id": 2
+	}
+]
+
+```
+
+
 
 ### How to create a customer
 1. Navigate to http://localhost:3000/customers/new or Sales in the navigation bar and click Become a customer
@@ -434,11 +464,40 @@ The customer model is a django model that represents a customer entity in the sy
 
 The sales person model represents a salesperson entity in the system. It has a foreign key relationship with the Sale model . Each sale object is associated with one Salesperson object.
 
-| Actions      | Method | URL  | Example Required JSON |
-| :---        | :----       | :---          |  :---     |
-| List Sales People   | GET      | http://localhost:8090/api/salespeople/  |       |
-| Create a Sales Person | POST        | http://localhost:8090/api/salespeople/    | `{"name": "Bill Gates", "employee_number": 3655}`  |
 
+| Actions          | Method | URL                                    |
+|------------------|--------|----------------------------------------|
+| List Sales People   | GET    | http://localhost:8090/api/salespeople/   |
+| Create a Sales Person | POST   | http://localhost:8090/api/salespeople/  |
+
+- Sample POST request for create view =>
+
+```
+
+{
+	"name": "Don Julio",
+	"employee_number": 1942
+}
+
+```
+
+- Sample GET request for list view =>
+```
+{
+	"salespersons": [
+		{
+			"name": "Don Julio",
+			"employee_number": 1942,
+			"id": 1
+		},
+		{
+			"name": "Remy Martin",
+			"employee_number": 1738,
+			"id": 2
+		}
+}
+
+```
 
 ### How to create a new sales person
 1. Navigate to http://localhost:3000/salesperson/new or in the navigation bar click Sales then click Become a sales person
@@ -450,11 +509,75 @@ The sales person model represents a salesperson entity in the system. It has a f
 
 The Sale model represents a sales record in the system, which captures information about a specific sale, the automobile sold, person who made the sale, and customer who bought the automobile. It has foreign key relationships with AutomobileVO, Salesperson, and Customer. Each object is associated with one automobile, one salesperson and optionally one customer object.
 
-| Actions      | Method | URL  | Example Required JSON |
-| :---        | :----       | :---          |  :---     |
-| List Sales Records  | GET       | http://localhost:8090/api/sales/ |       |
-| Create a Sales Record  | POST       | http://localhost:8090/api/salesrecords/ |  `{"sale_price": 60000, "vin": "2FMDK3KC7BBA78129", "salesperson": 2, "customer": 1}`     |
-| Sales person history  | GET       |  http://localhost:8090/api/salesperson/:id/sales |       |
+
+| Actions          | Method | URL                                    |
+|------------------|--------|----------------------------------------|
+| List Sales Records   | GET    | http://localhost:8090/api/sales/   |
+| Sales person history | GET | http://localhost:8090/api/salesperson/:id/sales |
+| Create a Sales Record | POST   | http://localhost:8090/api/salesrecords/  |
+
+- Sample POST request for create view (Sales Records) =>
+
+```
+{
+	"sale_price": 50000,
+	"vin": "4T3ZF13C5YU267563",
+	"salesperson": 1,
+	"customer": 1
+}
+
+```
+
+- Sample GET request for list view (List Sales Records)
+
+```
+{
+	"sales": [
+		{
+			"salesperson": "Jack Nicholson",
+			"customer": "Kevin McCallister",
+			"vin": "JH4KA3250KC009863",
+			"sale_price": 50000,
+			"id": 3,
+			"employee_number": 1
+		},
+		{
+			"salesperson": "Jack Black",
+			"customer": "Jimmy Fallon",
+			"vin": "JH4DA3340HS032394",
+			"sale_price": 50000,
+			"id": 4,
+			"employee_number": 2
+		}
+  ]
+}
+
+```
+
+
+- Sample GET request for list view (Sales Person History)
+
+
+```
+[
+	{
+		"salesperson": "John Adams",
+		"customer": "James Bond",
+		"vin": "JH4DA3340HS032394",
+		"sale_price": 5000,
+		"id": 1,
+		"employee_number": 808
+	},
+	{
+		"salesperson": "John Adams",
+		"customer": "Edward Cullen",
+		"vin": "4T3ZF13C5YU267563",
+		"sale_price": 123,
+		"id": 2,
+		"employee_number": 808
+	}
+]
+```
 
 
 ### How to create a new Sales Record
