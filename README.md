@@ -414,10 +414,15 @@ The AutomobileVO model is a value object. It is used by the Sales microservice t
 
 The customer model is a django model that represents a customer entity in the system. It has a foreign key relationship with the Sale model. Each sale object is associated with one customer object.
 
-| Actions          | Method | URL                                    | Example Required JSON                                  |
-|------------------|--------|----------------------------------------|--------------------------------------------------------|
-| List Customers   | GET    | http://localhost:8090/api/customers/   |                                                        |
-| Create a Customer| POST   | http://localhost:8090/api/customers/   | ```json<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;"name": "Steve Jobs",<br>&nbsp;&nbsp;&nbsp;&nbsp;"address": "One Apple Park Way, Cupertino, CA 95014",<br>&nbsp;&nbsp;&nbsp;&nbsp;"phone_number": 5108521579<br>}<br>``` |
+| Actions      | Method | URL  | Example Required JSON |
+| :---        | :----       | :---          |  :---     |
+| List Customers   | GET       | http://localhost:8090/api/customers/  |       |
+| Create a Customer  | POST        | http://localhost:8090/api/customers/     |  ```json
+{
+    "name": "Steve Jobs",
+    "address": "One Apple Park Way, Cupertino, CA 95014",
+    "phone_number": 5108521579
+}
 
 ### How to create a customer
 1. Navigate to http://localhost:3000/customers/new or Sales in the navigation bar and click Become a customer
