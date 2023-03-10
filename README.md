@@ -416,10 +416,10 @@ The customer model is a django model that represents a customer entity in the sy
 
 | Actions          | Method | URL                                    |
 |------------------|--------|----------------------------------------|
-| List Customers   | GET    | http://localhost:8090/api/customers/   |
-| Create a Customer| POST   | http://localhost:8090/api/customers/   |
+| List Customers   | `GET`    | http://localhost:8090/api/customers/   |
+| Create a Customer| `POST`   | http://localhost:8090/api/customers/   |
 
-- Sample POST request for create view =>
+- Sample `POST` request for create view =>
 
 ```
 
@@ -432,7 +432,7 @@ The customer model is a django model that represents a customer entity in the sy
 
 ```
 
-- Sample GET for list view =>
+- Sample `GET` for list view =>
 
 ```
 [
@@ -467,10 +467,10 @@ The sales person model represents a salesperson entity in the system. It has a f
 
 | Actions          | Method | URL                                    |
 |------------------|--------|----------------------------------------|
-| List Sales People   | GET    | http://localhost:8090/api/salespeople/   |
-| Create a Sales Person | POST   | http://localhost:8090/api/salespeople/  |
+| List Sales People   | `GET`    | http://localhost:8090/api/salespeople/   |
+| Create a Sales Person | `POST`   | http://localhost:8090/api/salespeople/  |
 
-- Sample POST request for create view =>
+- Sample `POST` request for create view =>
 
 ```
 
@@ -481,7 +481,7 @@ The sales person model represents a salesperson entity in the system. It has a f
 
 ```
 
-- Sample GET request for list view =>
+- Sample `GET` request for list view =>
 ```
 {
 	"salespersons": [
@@ -512,11 +512,11 @@ The Sale model represents a sales record in the system, which captures informati
 
 | Actions          | Method | URL                                    |
 |------------------|--------|----------------------------------------|
-| List Sales Records   | GET    | http://localhost:8090/api/sales/   |
-| Sales person history | GET | http://localhost:8090/api/salesperson/:id/sales |
-| Create a Sales Record | POST   | http://localhost:8090/api/salesrecords/  |
+| List Sales Records   | `GET`    | http://localhost:8090/api/sales/   |
+| Sales person history | `GET` | http://localhost:8090/api/salesperson/:id/sales |
+| Create a Sales Record | `POST`   | http://localhost:8090/api/salesrecords/  |
 
-- Sample POST request for create view (Sales Records) =>
+- Sample `POST` request for create view (Sales Records) =>
 
 ```
 {
@@ -528,7 +528,7 @@ The Sale model represents a sales record in the system, which captures informati
 
 ```
 
-- Sample GET request for list view (List Sales Records)
+- Sample `GET` request for list view (List Sales Records) =>
 
 ```
 {
@@ -555,7 +555,7 @@ The Sale model represents a sales record in the system, which captures informati
 ```
 
 
-- Sample GET request for list view (Sales Person History)
+- Sample `GET` request for list view (Sales Person History) =>
 
 
 ```
