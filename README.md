@@ -398,121 +398,73 @@ The Appointment model is also an entity because it has a life cycle (active, can
 ```
 
 
-## Sales microservice
+# Sales microservice
 The Sales microservice is responsible for managing sales data, which includes sales persons, customers, sales records, and inventory of automobiles. This microservice is divided into two applications - Sales API and Sales Poller.
 
 Sales API is a Django-based application that hosts the models, URLs, and views. It is accessible through Insomnia on port 8090.
 
 Sales Poller is a polling application that periodically requests automobile data from the Inventory API. It creates a new instance of the automobileVO in the Sales microservice database for every instance of the Automobile in the Inventory database.
 
-# AutomobileVO (Value Object)
+## AutomobileVO (Value Object)
 
 The AutomobileVO model is a value object. It is used to poll VIN data from the Inventory microservice. Those VINS are then used to create and manage sales of automobiles in the inventory.
 
-# Customer
+
+## Customer
 
 The customer model is a django model that represents a customer entity in the system. It has a foreign key relationship with the Sale model. Each sale object is associated with one customer object.
 
-| Actions      | Method | URL  | Required JSON |
+| Actions      | Method | URL  | Example Required JSON |
 | :---        | :----       | :---          |  :---     |
 | List Customers   | GET       | http://localhost:8090/api/customers/  |       |
 | Create a Customer  | POST        | http://localhost:8090/api/customers/     |   `{"name": "Steve Jobs", "address": "One Apple Park Way, Cupertino, CA 95014", "phone_number": 5108521579}`    |
 
-To create a new customer go to Sales in the navigation bar and click Become a customer. Enter a name, address, and phone number, click create. If creation is successful a success message should show.
 
-# Sales person
+### How to create a customer
+1. Navigate to http://localhost:3000/customers/new or Sales in the navigation bar and click Become a customer
+2. Input Name, Address, and Phone Number of customer
+3. Click Create, upon sucessful creation sucess message should show
+
+
+## Sales person
 
 The sales person model represents a salesperson entity in the system. It has a foreign key relationship with the Sale model . Each sale object is associated with one Salesperson object.
 
-| Actions      | Method | URL  | Required JSON |
-| :---        | :----       | :---          |  :---     |
+| Actions      | Method | URL  | Example Required JSON |
 | :---        | :----       | :---          |  :---     |
 | List Sales People   | GET      | http://localhost:8090/api/salespeople/  |       |
 | Create a Sales Person | POST        | http://localhost:8090/api/salespeople/    | `{"name": "Bill Gates", "employee_number": 3655}`  |
 
-To create a new sales person navigate to Sales in the navigation bar and click Become a sales person. Enter a name and Employee ID number. ***Note: employee_number max 5 digits.*** . Click create, upon successful creation a success message should show.
+
+### How to create a new sales person
+1. Navigate to http://localhost:3000/salesperson/new or in the navigation bar click Sales then click Become a sales person
+2. Enter Name and Emplyee ID of sales person ***Note: Employee ID is max 5 digits.***
+3. Click create, upon successful creatiion success message should show
+
 
 # Sale
 
 The Sale model represents a sales record in the system, which captures information about a specific sale, the automobile sold, person who made the sale, and customer who bought the automobile. It has foreign key relationships with AutomobileVO, Salesperson, and Customer. Each object is associated with one automobile, one salesperson and optionally one customer object.
 
-| Actions      | Method | URL  | Required JSON |
+| Actions      | Method | URL  | Example Required JSON |
 | :---        | :----       | :---          |  :---     |
 | List Sales Records  | GET       | http://localhost:8090/api/sales/ |       |
 | Create a Sales Record  | POST       | http://localhost:8090/api/salesrecords/ |  `{"sale_price": 60000, "vin": "2FMDK3KC7BBA78129", "salesperson": 2, "customer": 1}`     |
-| Sales person history  | GET       |  http://localhost:8090/api/salesperson/<:id>/sales |       |
-
-To create a new sale navigate to http://localhost:3000/sales/new in your browser or click Create a new sales record in the navigation listed under Sales. In order to create a new sale these must exist: an unsold automobile in the inventory, a sales person created, and a customer created. Automobiles in the inventory which are already sold will not appear as an option in Choose an Automobile selection.
-
-# Sales RESTful APIs:
-
-Sales information
-| Actions      | Method | URL  | Required JSON |
-| :---        | :----       | :---          |  :---     |
-| List Sales People   | GET      | http://localhost:8090/api/salespeople/  |       |
-| Create a Sales Person | POST        | http://localhost:8090/api/salespeople/    | ***Note: employee_number max 5 digits.*** `{"name": "Bill Gates", "employee_number": 3655}`  |
-| List Customers   | GET       | http://localhost:8090/api/customers/  |       |
-| Create a Customer  | POST        | http://localhost:8090/api/customers/     |   `{"name": "Steve Jobs", "address": "One Apple Park Way", "phone_number": 5108521579}`    |
-| List Sales Records  | GET       | http://localhost:8090/api/sales/ |       |
-| Create a Sales Record  | POST       | http://localhost:8090/api/salesrecords/ |  `{"sale_price": 60000, "vin": "2FMDK3KC7BBA78129", "salesperson": 2, "customer": 1}`     |
-| Sales person history  | GET       |  http://localhost:8090/api/salesperson/<:id>/sales |       |
+| Sales person history  | GET       |  http://localhost:8090/api/salesperson/:id/sales |       |
 
 
+### How to create a new Sales Record
+1. Navigate to http://localhost:3000/sales/new or Sales in the navigation bar then click Create a new sales record. Alternatively you can navigate to http://localhost:3000/sales and click Create a Sale
+2. Select option in Choose an Automobile in which you would like to be sold ***Note: Automobiles which have already been sold will not appear in the dropdown. If no options appear you need to Create Automobile ***
+3. Select option in Choose a Sales Person in which is selling the automobile  ***Note: If no options appear you need to create a sales person see How to create a new sales person. ***
+4. Select option in Choose a Customer in which is buying the automobile ***Note: If no options appear you need to create a Customer see How to create a new customer. ***
+5. Input sale price in USD
+6. Click Create, upon successful creation you will be redirected to the list of sales page (http://localhost:3000/sales)
 
 
+### How to view all sales
+1. Navigate to http://localhost:3000/sales or Click Sales in the navigation bar then click list of sales Salesperson history
+2. Select option in Choose a Salesperson to display all the sales that person has made
 
-| Action              | Method | URL                                    |
-| ------------------- | ------ | -------------------------------------- |
-| List customers   | GET    | http://localhost:8090/api/customers/ |
-| Create a customer | POST   | http://localhost:8090/api/customers/ |
-| List Sales people | GET   | http://localhost:8090/api/salespeople/ |
-| Create a sales person | POST   | http://localhost:8090/api/salespeople/ |
-| List all sales | GET   | http://localhost:8090/api/sales/ |
-| Sales person history | GET   | http://localhost:8090/api/salesperson/<:id>/sales |
-| Create a sale | POST   | http://localhost:8090/api/sales/ |
-
-## Sales Person:
-
-| Action              | Method | URL                                    |
-| ------------------- | ------ | -------------------------------------- |
-| List Sales people | GET   | http://localhost:8090/api/salespeople/ |
-| Create a sales person | POST   | http://localhost:8090/api/salespeople/ |
-
-Example JSON body input to create a new Sales Person:
-***Note: employee_number max 5 digits.***
-
-```
-{
-	"name": "Steve Jobs",
-	"employee_number": 365
-}
-
-```
-Example JSON body output after creation of new Sales Person:
-
-```
-
-{
-	"name": "Steve Jobs",
-	"employee_number": 365,
-	"id": 5
-}
-
-```
-
-
-
-## Customer:
-
-| Action              | Method | URL                                    |
-| ------------------- | ------ | -------------------------------------- |
-| List customers   | GET    | http://localhost:8090/api/customers/ |
-| Create a customer | POST   | http://localhost:8090/api/customers/ |
-
-## Sales Record:
-
-
-
-
-Explain your models and integration with the inventory
-microservice, here.
+### How to view Sales Person history
+1. Navigate to http://localhost:3000/salesperson/history or Click sales in the navigation bar then click
