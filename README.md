@@ -418,15 +418,31 @@ The customer model is a django model that represents a customer entity in the sy
 | List Customers   | GET       | http://localhost:8090/api/customers/  |       |
 | Create a Customer  | POST        | http://localhost:8090/api/customers/     |   `{"name": "Steve Jobs", "address": "One Apple Park Way, Cupertino, CA 95014", "phone_number": 5108521579}`    |
 
-To create a new customer go to Sales in the navigation bar and click Become a customer. Enter a name, address ()
+To create a new customer go to Sales in the navigation bar and click Become a customer. Enter a name, address, and phone number, click create. If creation is successful a success message should show.
 
 # Sales person
 
 The sales person model represents a salesperson entity in the system. It has a foreign key relationship with the Sale model . Each sale object is associated with one Salesperson object.
 
+| Actions      | Method | URL  | Required JSON |
+| :---        | :----       | :---          |  :---     |
+| :---        | :----       | :---          |  :---     |
+| List Sales People   | GET      | http://localhost:8090/api/salespeople/  |       |
+| Create a Sales Person | POST        | http://localhost:8090/api/salespeople/    | `{"name": "Bill Gates", "employee_number": 3655}`  |
+
+To create a new sales person navigate to Sales in the navigation bar and click Become a sales person. Enter a name and Employee ID number. ***Note: employee_number max 5 digits.*** . Click create, upon successful creation a success message should show.
+
 # Sale
 
 The Sale model represents a sales record in the system, which captures information about a specific sale, the automobile sold, person who made the sale, and customer who bought the automobile. It has foreign key relationships with AutomobileVO, Salesperson, and Customer. Each object is associated with one automobile, one salesperson and optionally one customer object.
+
+| Actions      | Method | URL  | Required JSON |
+| :---        | :----       | :---          |  :---     |
+| List Sales Records  | GET       | http://localhost:8090/api/sales/ |       |
+| Create a Sales Record  | POST       | http://localhost:8090/api/salesrecords/ |  `{"sale_price": 60000, "vin": "2FMDK3KC7BBA78129", "salesperson": 2, "customer": 1}`     |
+| Sales person history  | GET       |  http://localhost:8090/api/salesperson/<:id>/sales |       |
+
+To create a new sale navigate to http://localhost:3000/sales/new in your browser or click Create a new sales record in the navigation listed under Sales. In order to create a new sale these must exist: an unsold automobile in the inventory, a sales person created, and a customer created. Automobiles in the inventory which are already sold will not appear as an option in Choose an Automobile selection.
 
 # Sales RESTful APIs:
 
