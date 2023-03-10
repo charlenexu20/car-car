@@ -115,6 +115,40 @@ function Nav() {
               >
                 Services
               </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="technicians/new"
+                >
+                  Enter a technician
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="appointments/new"
+                >
+                  Enter a service appointment
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="appointments/"
+                >
+                  Service Appointment List
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="search/"
+                >
+                  Service History
+                </NavLink>
+
+              </ul>
             </li>
           </ul>
         </div>

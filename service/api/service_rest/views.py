@@ -100,12 +100,20 @@ def api_show_technician(request, pk):
 
 
 @require_http_methods(["GET", "POST"])
-def api_list_appointments(request):
+def api_list_appointments(request, automobile_vo_vin = None):
     if request.method == "GET":
-        appointments = Appointment.objects.all()
+        if automobile_vo_vin is not None:
+            appointment =Appointment.objects.filter(vin=automobile_vo_vin)
+            return JsonResponse(
+                {"appointments": appointment},
+                encoder=AppointmentEncoder,
+            )
+        else:
+            appointments = Appointment.objects.all()
         return JsonResponse(
             {"appointments": appointments},
             encoder=AppointmentEncoder,
+            safe=False,
         )
     else:
         content = json.loads(request.body)
@@ -120,15 +128,26 @@ def api_list_appointments(request):
                 status=400,
             )
 
-        appointment = Appointment.objects.create(**content)
-        return JsonResponse(
-            appointment,
-            encoder=AppointmentEncoder,
-            safe=False,
-        )
+        try:
+            automobile = AutomobileVO.objects.get(import_vin=content["vin"])
+            if content["vin"] == automobile.import_vin:
+                content["is_vip"] = True
+                appointment = Appointment.objects.create(**content)
+                return JsonResponse(
+                    appointment,
+                    encoder=AppointmentEncoder,
+                    safe=False
+                )
+        except AutomobileVO.DoesNotExist:
+            appointment=Appointment.objects.create(**content)
+            return JsonResponse(
+                appointment,
+                encoder=AppointmentEncoder,
+                safe=False
+            )
 
 
-@require_http_methods(["GET", "DELETE"])
+@require_http_methods(["GET", "PUT", "DELETE"])
 def api_show_appointment(request, pk):
     if request.method == "GET":
         try:
@@ -143,6 +162,17 @@ def api_show_appointment(request, pk):
             encoder=AppointmentEncoder,
             safe=False,
         )
+
+    elif request.method == "PUT":
+        content = json.loads(request.body)
+        Appointment.objects.filter(id=pk).update(**content)
+        appointment = Appointment.objects.get(id=pk)
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentEncoder,
+            safe=False
+        )
+
     else:
         count, _ = Appointment.objects.filter(id=pk).delete()
         return JsonResponse({"deleted": count > 0})
