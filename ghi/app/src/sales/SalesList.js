@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function SalesList() {
-    // LIST----------------------------------------------------------------
+
     const [sales, setSale] = useState([]);
     const fetchData = async () => {
         const saleUrl = `http://localhost:8090/api/sales/`;
@@ -24,8 +24,8 @@ function SalesList() {
 
     return (
         <div className="container">
-        <h1 className="card display-5 text-dark fw-bold text-center my-3">
-            ALL SALES HISTORY
+        <h1>
+            Sales History
         </h1>
 
         <table className="table table-striped">
@@ -35,7 +35,7 @@ function SalesList() {
                 <th>Employee Number</th>
                 <th>Customer Name</th>
                 <th>Automobile VIN</th>
-                <th>Sale Price</th>
+                <th>Sale Price (USD)</th>
             </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@ function SalesList() {
                     <td>{sale.employee_number}</td>
                     <td>{sale.customer}</td>
                     <td>{sale.vin}</td>
-                    <td>{sale.sale_price}</td>
+                    <td>${sale.sale_price}</td>
                 </tr>
                 );
             })}
@@ -54,6 +54,7 @@ function SalesList() {
         </table>
         <div className="text-center">
         <button onClick={handleClick} className="btn btn-primary">Create a Sale</button>
+
         </div>
         </div>
     );

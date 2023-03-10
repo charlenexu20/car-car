@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 function SalesPersonForm() {
-
     const [name, setSalesName] = useState('');
     const handleSalesNameChange = (event) => {
         const value = event.target.value;
@@ -14,10 +13,11 @@ function SalesPersonForm() {
         setemployeeId(value);
     }
 
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {};
-
 
         data.name = name;
         data.employee_number = employee_number;
@@ -36,6 +36,7 @@ function SalesPersonForm() {
         if (response.ok) {
             setSalesName('');
             setemployeeId('');
+            setShowSuccessMessage(true);
         }
     }
 
@@ -61,16 +62,21 @@ function SalesPersonForm() {
                             <input
                                 value={employee_number}
                                 onChange={handleEmployeeIdChange}
-                                placeholder="Employee ID#"
+                                placeholder="Employee ID"
                                 maxLength={6}
                                 required type="text"
                                 name='employeeId' id="employeeId"
                                 className="form-control" />
-                            <label htmlFor="employeeId">Employee ID#</label>
+                            <label htmlFor="employeeId">Employee ID</label>
                         </div>
                         <button
                             className="btn btn-primary">Create</button>
                     </form>
+                    {showSuccessMessage && (
+                        <div className="alert alert-success mt-3">
+                            Sales person created successfully!
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

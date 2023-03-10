@@ -21,7 +21,7 @@ const handleSalespersonChange = (event) => {
     setSelectedSalesperson(event.target.value);
 };
 
-// LIST----------------------------------------------------------------
+
 const [sales, setSale] = useState([]);
 const fetchData = async () => {
     const saleUrl = `http://localhost:8090/api/salesperson/${selectedSalesperson}/sales/`;
@@ -41,8 +41,8 @@ useEffect(() => {
 
 return (
     <div className="container">
-    <h1 className="card display-5 text-dark fw-bold text-center my-3">
-        SALESPERSON HISTORY
+    <h1>
+        Sales person history
     </h1>
     <div className="mb-3">
         <select
