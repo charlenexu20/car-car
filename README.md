@@ -31,9 +31,15 @@ Team:
 8. Visit http://localhost:3000 in the browser.
 
 ## Inventory microservice
+
 **URL and port:** http://localhost:8100/
 
+The Inventory microservice allows the users to create manufacturer, vehicle model, and automibile. Users can also check the manufacturers list, vehicle models list, and automobiles list.
 
+### Models
+* Manufacturer
+* VehicleModel
+* Automobile
 
 ## **Manufacturers**
 | Action              | Method | URL                                    |
@@ -228,12 +234,58 @@ Getting a list of automobiles returns a dictionary with the key "autos" set to a
 ## Service microservice
 
 **URL and port:** http://localhost:8080/
-Service microservice has three models: AutomobileVO, Technician, and Appointment.
+
+Service microservice has three models: AutomobileVO, Technician, and Appointment. It helps the users to manage the service appointments easily. The Service polls data from the Inventory through AutomobileVO and uses the VIN data to determine the VIP status in an appointment. The components of this microservice includes creating a technician, creating a service appointment, displaying service appointment list, and searching the appointment history by VIN.
+
+**Polling**
+
+Service microservice polls the Inventory microservice every 60 seconds for automobile updates.
+
+**Models**
+
+* AutomobileVO (Value Object)
+    - color: string
+    - year: integer
+    - import_vin: string
+    - import_href: string
+
+* Technician(Entity)
+    - technician_name: string
+    - employee_number: integer
+
+* Appointment(Entity)
+    - vin: string
+    - customer_name: string
+    - date: date
+    - time: time
+    - technician: (a ForeignKey of Technician model)
+    - reason: string
+    - is_vip: boolean
+    - is_cancelled: boolean
+    - is_finished: boolean
+
+**Components**
+
+* TechnicianForm
+    - allows a person to enter an automotive technician's name and employee number. When the form is submitted, the automotive technician is created in the application.
+    - navigate to http://localhost:3000/technicians/new or click Services in the navigation bar.
+
+* ServiceAppointmentForm
+    - allows a service concierge to enter the VIN of the vehicle, the name of the person to whom the vehicle belongs, the date and time of the appointment, the assigned technician, and a reason for the service appointment (like "oil change" or "routine maintenance"). When the form is submitted, the service appointment should be saved in the application.
+    - navigate to http://localhost:3000/appointments/new or click Services in the navigation bar.
+
+* ServiceAppointmentList
+    - show a list of scheduled appointments that contain the details collected in the form: VIN, customer name, date and time of the appointment, the assigned technician's name, and the reason for the service. If the VIN is for an automobile that was at one time in the inventory, then the automobile was purchased from the dealership. The list of scheduled appointments should display the VIP status so that the concierge can give that customer "VIP treatment". Each appointment in the list of appointments have a button that allows a service concierge to cancel the appointment, or to show that the service appointment has been finished. When a service appointment is canceled or finished, it should no longer show up in the list of appointments.
+    - navigate to http://localhost:3000/appointments/ or click Services in the navigation bar.
+
+* ServiceHistory
+    - show a list of the service appointments for a specific VIN. The list of service appointments include the customer name, date and time of the appointment, the assigned technician's name, and the reason for the service.
+    - navigate to http://localhost:3000/search/ or click Services in the navigation bar.
 
 ### CRUD Routes
 
 #### AutomobileVO (Value Object)
-The AutomobileVO model is a value object. It's used to poll VIN data from the Inventory microservice.  If the VIN is for an automobile that was at one time in the inventory, then the automobile was purchased from the dealership. The list of scheduled appointments should show that the automobile was purchased from the dealership so that the concierge can give that customer "VIP treatment".
+The AutomobileVO model is a value object. It's used to poll VIN data from the Inventory microservice. If the VIN is for an automobile that was at one time in the inventory, then the automobile was purchased from the dealership. The list of scheduled appointments should show that the automobile was purchased from the dealership so that the concierge can give that customer "VIP treatment".
 
 **List view of automobilesVO from polling service**
 * request method => `GET`: http://localhost:8080/api/automobiles/
@@ -268,15 +320,23 @@ The technician model is an entity and is used to create technician and get a lis
 
 * request method => `GET`: http://localhost:8080/api/technicians/
 * request method => `POST`: http://localhost:8080/api/technicians/<:id>/
-* request method => `PUT`: http://localhost:8080/api/technicians/<:id>/
 * request method => `DELETE`: http://localhost:8080/api/technicians/<:id>/
 
 * sample POST request for create view =>
 ```
 {
-	"technician_name": "Jackie Hall",
-    "employee_number": 121212,
-    "id": 1
+    "technician_name": "Calanthe Melody",
+    "employee_number": 153440
+}
+```
+
+* sample POST return for create view =>
+```
+{
+	"href": "/api/technicians/11/",
+	"technician_name": "Calanthe Melody",
+	"employee_number": 153440,
+	"id": 11
 }
 ```
 
@@ -285,28 +345,28 @@ The technician model is an entity and is used to create technician and get a lis
 {
 	"technicians": [
 		{
-			"href": "/api/technicians/1/",
-			"technician_name": "Jackie Hall",
-			"employee_number": 121212,
-			"id": 1
+			"href": "/api/technicians/10/",
+			"technician_name": "Haruto Jeannine",
+			"employee_number": 153430,
+			"id": 10
 		},
 		{
-			"href": "/api/technicians/2/",
-			"technician_name": "Billy Song",
-			"employee_number": 153401,
-			"id": 2
+			"href": "/api/technicians/11/",
+			"technician_name": "Calanthe Melody",
+			"employee_number": 153440,
+			"id": 11
 		}
 	]
 }
 ```
 
-* sample REQUEST for detail view =>
+* sample GET request return for detail view =>
 ```
 {
-	"href": "/api/technicians/1/",
-	"technician_name": "Jackie Hall",
-	"employee_number": 121212,
-	"id": 1
+	"href": "/api/technicians/11/",
+	"technician_name": "Calanthe Melody",
+	"employee_number": 153440,
+	"id": 11
 }
 ```
 
@@ -319,13 +379,14 @@ The Appointment model is also an entity because it has a life cycle (active, can
 * request method => `DELETE`: http://localhost:8080/api/appointments/<:id>/
 
 * sample POST request for create view =>
+In this example, the VIN is the same as the VIN in Inventory, so it should indicates that is_vip: true in the detail view.
 ```
 {
-	"vin": "1C3CC5FB2AN120172",
-	"customer_name": "Vip Doe",
-	"date": "2023-07-11",
+	"vin": "5UXKU6C51G0R34085",
+	"customer_name": "Chloe Isiah",
+	"date": "2023-06-11",
 	"time": "12:30",
-	"technician": 2,
+	"technician": 11,
 	"reason": "tire change"
 }
 ```
@@ -335,67 +396,97 @@ The Appointment model is also an entity because it has a life cycle (active, can
 {
 	"appointments": [
 		{
-			"href": "/api/appointments/35/",
-			"vin": "WAUBGAFL1EA066230",
-			"customer_name": "Sandy Doe",
+			"href": "/api/appointments/46/",
+			"vin": "5UXKU6C51G0R34085",
+			"customer_name": "Gwenevere Marlon",
 			"technician": {
-				"href": "/api/technicians/2/",
-				"technician_name": "Billy Song",
-				"employee_number": 153401,
-				"id": 2
+				"href": "/api/technicians/8/",
+				"technician_name": "Caroline Ruby",
+				"employee_number": 153420,
+				"id": 8
 			},
-			"reason": "tire change",
-			"is_vip": false,
+			"reason": "filter change",
+			"is_vip": true,
 			"is_cancelled": false,
 			"is_finished": true,
-			"id": 35,
-			"date": "2023-09-11",
-			"time": "12:30:00"
+			"id": 46,
+			"date": "2023-03-21",
+			"time": "10:30:00"
 		},
 		{
-			"href": "/api/appointments/44/",
-			"vin": "WAUAF98E78A128813",
-			"customer_name": "Katsuo Akihito",
+			"href": "/api/appointments/48/",
+			"vin": "5UXKU6C51G0R34085",
+			"customer_name": "Chloe Isiah",
 			"technician": {
-				"href": "/api/technicians/5/",
-				"technician_name": "Jason Chan",
-				"employee_number": 153405,
-				"id": 5
+				"href": "/api/technicians/11/",
+				"technician_name": "Calanthe May",
+				"employee_number": 153440,
+				"id": 11
 			},
-			"reason": "battery change",
+			"reason": "tire change",
 			"is_vip": true,
 			"is_cancelled": false,
 			"is_finished": false,
-			"id": 44,
-			"date": "2023-03-31",
-			"time": "14:30:00"
+			"id": 48,
+			"date": "2023-06-11",
+			"time": "12:30:00"
 		}
 	]
 }
 ```
 
-* sample GET request for detail view =>
+* sample GET request return for detail view =>
 ```
 {
-	"href": "/api/appointments/31/",
-	"vin": "4T1BF12B3VU142754",
-	"customer_name": "Queenie Doe",
+	"href": "/api/appointments/48/",
+	"vin": "5UXKU6C51G0R34085",
+	"customer_name": "Chloe Isiah",
 	"technician": {
-		"href": "/api/technicians/3/",
-		"technician_name": "Benny Kim",
-		"employee_number": 153402,
-		"id": 3
+		"href": "/api/technicians/11/",
+		"technician_name": "Calanthe May",
+		"employee_number": 153440,
+		"id": 11
 	},
 	"reason": "tire change",
-	"is_vip": false,
+	"is_vip": true,
 	"is_cancelled": false,
-	"is_finished": true,
-	"id": 31,
+	"is_finished": false,
+	"id": 48,
 	"date": "2023-06-11",
 	"time": "12:30:00"
 }
 ```
 
+* sample PUT request to update appointment =>
+```
+{
+	"id": 48,
+	"is_cancelled": false,
+	"is_finished": true
+}
+```
+
+* sample return after the PUT request =>
+```
+{
+	"href": "/api/appointments/48/",
+	"vin": "5UXKU6C51G0R34085",
+	"customer_name": "Chloe Isiah",
+	"technician": {
+		"href": "/api/technicians/11/",
+		"technician_name": "Calanthe May",
+		"employee_number": 153440,
+		"id": 11
+	},
+	"reason": "tire change",
+	"is_vip": true,
+	"is_cancelled": false,
+	"is_finished": true,
+	"id": 48,
+	"date": "2023-06-11",
+	"time": "12:30:00"
+}
+```
 
 ## Sales microservice
 
