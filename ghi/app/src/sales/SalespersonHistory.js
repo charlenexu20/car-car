@@ -23,21 +23,22 @@ const handleSalespersonChange = (event) => {
 
 
 const [sales, setSale] = useState([]);
-const fetchData = async () => {
-    const saleUrl = `http://localhost:8090/api/salesperson/${selectedSalesperson}/sales/`;
-    const response = await fetch(saleUrl);
-
-    if (response.ok) {
-    const data = await response.json();
-    setSale(data);
-    }
-};
 
 useEffect(() => {
+    const fetchData = async () => {
+        const saleUrl = `http://localhost:8090/api/salesperson/${selectedSalesperson}/sales/`;
+        const response = await fetch(saleUrl);
+
+        if (response.ok) {
+        const data = await response.json();
+        setSale(data);
+        }
+    };
+
     if (selectedSalesperson) {
     fetchData();
     }
-}, [selectedSalesperson]);
+}, [selectedSalesperson]); //***Change */
 
 return (
     <div className="container">
@@ -73,17 +74,15 @@ return (
         </tr>
         </thead>
         <tbody>
-        {sales.map((sale, id) => {
-            return (
-            <tr key={id}>
-                <td>{sale.salesperson}</td>
-                <td>{sale.employee_number}</td>
-                <td>{sale.customer}</td>
-                <td>{sale.vin}</td>
-                <td>{sale.sale_price}</td>
-            </tr>
-            );
-        })}
+        {sales.map((sale, id) => (
+    <tr key={id}>
+        <td>{sale.salesperson}</td>
+        <td>{sale.employee_number}</td>
+        <td>{sale.customer}</td>
+        <td>{sale.vin}</td>
+        <td>{sale.sale_price}</td>
+    </tr>
+))}
         </tbody>
     </table>
     </div>

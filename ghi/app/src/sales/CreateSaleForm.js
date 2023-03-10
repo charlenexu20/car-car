@@ -21,7 +21,7 @@ function CreateSaleForm() {
 
   const [automobile, setAutomobile] = useState('');
   const [automobiles, setAutomobiles] = useState([]);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
 
   const handleAutomobileChange = (event) => {
     const data = event.target.value;
@@ -192,11 +192,6 @@ return (
                             <button className="btn btn-primary">Create</button>
                         </div>
                     </form>
-                    {showSuccessMessage && (
-                        <div className="alert alert-success mt-3" role="alert">
-                            Sale created successfully!
-                        </div>
-                    )}
                 </div>
             </div>
         </div>

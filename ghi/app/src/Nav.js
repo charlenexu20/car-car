@@ -100,6 +100,48 @@ function Nav() {
               >
                 Sales
               </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="salesperson/new"
+                >
+                  Become a sales person
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="customers/new"
+                >
+                  Become a customer
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="sales/new"
+                >
+                  Create a new sales record
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="sales"
+                >
+                  List of sales
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="salesperson/history"
+                >
+                  Salesperson history
+                </NavLink>
+
+              </ul>
             </li>
 
             {/* Services dropdown: */}
