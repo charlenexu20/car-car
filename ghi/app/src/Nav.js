@@ -2,40 +2,154 @@ import { NavLink } from 'react-router-dom';
 
 function Nav() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-success">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="/">CarCar</NavLink>
-        <div className="nav-item dropdown">
-              <NavLink className="btn btn-outline-secondary dropdown-toggle bg-success" to="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                Inventory
-              </NavLink>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><NavLink className="dropdown-item" to="/manufacturers">Show a list of manufacturers</NavLink></li>
-                <li><NavLink className="dropdown-item" to="/manufacturers/new">Create a new manufacturer</NavLink></li>
-                <li><NavLink className="dropdown-item" to="/models">Show a list of vehicle models</NavLink></li>
-                <li><NavLink className="dropdown-item" to="/models/new">Create a new vehicle model</NavLink></li>
-                <li><NavLink className="dropdown-item" to="/automobiles">Show a list of automobiles in inventory</NavLink></li>
-                <li><NavLink className="dropdown-item" to="/automobiles/new">Create a new automobile in inventory</NavLink></li>
 
-              </ul>
-          </div>
-          <div className="nav-item dropdown">
-          <NavLink className="btn btn-outline-secondary dropdown-toggle bg-success" to="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                Sales
-          </NavLink>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><NavLink className="dropdown-item" to="salesperson/new"> Add a sales person</NavLink></li>
-              <li><NavLink className="dropdown-item" to="customers/new"> Add a new customer</NavLink></li>
-              <li><NavLink className="dropdown-item" to="sales/new">Create a new sales record</NavLink></li>
-              <li><NavLink className="dropdown-item" to="sales">List Of Our Sales</NavLink></li>
-              <li><NavLink className="dropdown-item" to="salesperson/history">Salesperson History</NavLink></li>
-            </ul>
-          </div>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
+
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item dropdown">
+              <a
+                href="/"
+                className="nav-link dropdown-toggle"
+                to="#"
+                role="button"
+                id="navbarDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Inventory
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="manufacturers/"
+                >
+                  Manufacturers List
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="manufacturers/new"
+                >
+                  Create Manufacturer
+                </NavLink>
+
+                <hr className="dropdown-divider"></hr>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="models/"
+                >
+                  Vehicle Models List
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="models/new"
+                >
+                  Create Vehicle Model
+                </NavLink>
+
+                <hr className="dropdown-divider"></hr>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="automobiles/"
+                >
+                  Automobiles List
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="automobiles/new"
+                >
+                  Create Automobile
+                </NavLink>
+              </ul>
+            </li>
+
+            {/* Sales dropdown: */}
+            <li className="nav-item dropdown">
+              <a
+                href="/"
+                className="nav-link dropdown-toggle"
+                to="#"
+                role="button"
+                id="navbarDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Sales
+              </a>
+            </li>
+
+            {/* Services dropdown: */}
+            <li className="nav-item dropdown">
+              <a
+                href="/"
+                className="nav-link dropdown-toggle"
+                to="#"
+                role="button"
+                id="navbarDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Services
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="technicians/new"
+                >
+                  Enter a technician
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="appointments/new"
+                >
+                  Enter a service appointment
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="appointments/"
+                >
+                  Service Appointment List
+                </NavLink>
+
+                <NavLink
+                  className="dropdown-item"
+                  aria-selected="true"
+                  to="search/"
+                >
+                  Service History
+                </NavLink>
+
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
