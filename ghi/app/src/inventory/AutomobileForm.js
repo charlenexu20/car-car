@@ -83,8 +83,8 @@ function AutomobileForm() {
                             <label htmlFor="year">Year</label>
                         </div>
                         <div className="form-floating mb-3">
-                            <input value={vin} onChange={handleVINChange} placeholder="VIN" required type="vin" name="vin" id="vin" className="form-control" />
-                            <label htmlFor="vin">VIN</label>
+                            <input value={vin} onChange={handleVINChange} placeholder="vin" required type="vin" name="vin" id="vin" className="form-control" />
+                            <label htmlFor="vin">vin</label>
                         </div>
                         <div className="mb-3">
                             <select
