@@ -77,19 +77,19 @@ function ServiceHistory() {
                     </tr>
                 </thead>
                 <tbody>
-                    {filterAppts.map(appointment => {
-                        if (appointment.vin === search && buttonClick) {
-                            return (
-                                <tr key={appointment.id}>
-                                    <td>{appointment.vin}</td>
-                                    <td>{appointment.customer_name}</td>
-                                    <td>{appointment.date}</td>
-                                    <td>{appointment.time}</td>
-                                    <td>{appointment.technician.technician_name}</td>
-                                    <td>{appointment.reason}</td>
-                                </tr>
-                            );
-                        }
+                    {filterAppts.filter(
+                        appointment => appointment.vin === search && buttonClick
+                        ).map(appointment => {
+                        return (
+                            <tr key={appointment.id}>
+                                <td>{appointment.vin}</td>
+                                <td>{appointment.customer_name}</td>
+                                <td>{appointment.date}</td>
+                                <td>{appointment.time}</td>
+                                <td>{appointment.technician.technician_name}</td>
+                                <td>{appointment.reason}</td>
+                            </tr>
+                        );
                     })}
                 </tbody>
             </table>
