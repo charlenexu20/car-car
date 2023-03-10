@@ -407,7 +407,7 @@ Sales Poller is a polling application that periodically requests automobile data
 
 ## AutomobileVO (Value Object)
 
-The AutomobileVO model is a value object. It is used to poll VIN data from the Inventory microservice. Those VINS are then used to create and manage sales of automobiles in the inventory.
+The AutomobileVO model is a value object. It is used by the Sales microservice to poll  data such as VIN, Color, and year from the Inventory microservice. It is needed because that data are then used to create and manage sales of automobiles in the inventory.
 
 
 ## Customer
@@ -417,7 +417,10 @@ The customer model is a django model that represents a customer entity in the sy
 | Actions      | Method | URL  | Example Required JSON |
 | :---        | :----       | :---          |  :---     |
 | List Customers   | GET       | http://localhost:8090/api/customers/  |       |
-| Create a Customer  | POST        | http://localhost:8090/api/customers/     |   `{"name": "Steve Jobs", "address": "One Apple Park Way, Cupertino, CA 95014", "phone_number": 5108521579}`    |
+| Create a Customer  | POST        | http://localhost:8090/api/customers/     |  ``` `{"name": "Steve Jobs",
+ "address": "One Apple Park Way,
+  Cupertino, CA 95014",
+ "phone_number": 5108521579}` ```   |
 
 
 ### How to create a customer
@@ -455,16 +458,17 @@ The Sale model represents a sales record in the system, which captures informati
 
 ### How to create a new Sales Record
 1. Navigate to http://localhost:3000/sales/new or Sales in the navigation bar then click Create a new sales record. Alternatively you can navigate to http://localhost:3000/sales and click Create a Sale
-2. Select option in Choose an Automobile in which you would like to be sold ***Note: Automobiles which have already been sold will not appear in the dropdown. If no options appear you need to Create Automobile ***
-3. Select option in Choose a Sales Person in which is selling the automobile  ***Note: If no options appear you need to create a sales person see How to create a new sales person. ***
-4. Select option in Choose a Customer in which is buying the automobile ***Note: If no options appear you need to create a Customer see How to create a new customer. ***
+2. Select option in Choose an Automobile in which you would like to be sold ***Note: Automobiles which have already been sold will not appear in the dropdown. If no options appear you need to Create Automobile***
+3. Select option in Choose a Sales Person in which is selling the automobile  ***Note: If no options appear you need to create a sales person see How to create a new sales person.***
+4. Select option in Choose a Customer in which is buying the automobile ***Note: If no options appear you need to create a Customer see How to create a new customer.***
 5. Input sale price in USD
 6. Click Create, upon successful creation you will be redirected to the list of sales page (http://localhost:3000/sales)
 
 
 ### How to view all sales
 1. Navigate to http://localhost:3000/sales or Click Sales in the navigation bar then click list of sales Salesperson history
-2. Select option in Choose a Salesperson to display all the sales that person has made
+
 
 ### How to view Sales Person history
-1. Navigate to http://localhost:3000/salesperson/history or Click sales in the navigation bar then click
+1. Navigate to http://localhost:3000/salesperson/history or Click sales in the navigation bar then click Salesperson history
+2. Select option in Choose a Salesperson to display all the sales that person has made
