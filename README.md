@@ -407,12 +407,12 @@ Sales Poller is a polling application that periodically requests automobile data
 
 ## AutomobileVO (Value Object)
 
-The AutomobileVO model is a value object. It is used by the Sales microservice to poll  data such as VIN, Color, and year from the Inventory microservice. It is needed because that data are then used to create and manage sales of automobiles in the inventory.
+The `AutomobileVO` model is a value object. It is used by the Sales microservice to poll  data such as VIN, Color, and year from the Inventory microservice. It is needed because that data are then used to create and manage sales of automobiles in the inventory. This also ensures that automobiles that are already sold in our inventory are not available for purchase on the Create a sale record form.
 
 
 ## Customer
 
-The customer model is a django model that represents a customer entity in the system. It has a foreign key relationship with the Sale model. Each sale object is associated with one customer object.
+The `Customer` model is a django model that represents a customer entity in the system. It has a foreign key relationship with the `Sale` model. Each sale object is associated with one customer object.
 
 | Actions          | Method | URL                                    |
 |------------------|--------|----------------------------------------|
@@ -462,7 +462,7 @@ The customer model is a django model that represents a customer entity in the sy
 
 ## Sales person
 
-The sales person model represents a salesperson entity in the system. It has a foreign key relationship with the Sale model . Each sale object is associated with one Salesperson object.
+The `Salesperson` model represents a salesperson entity in the system. It has a foreign key relationship with the `Sale` model . Each sale object is associated with one `Salesperson` object.
 
 
 | Actions          | Method | URL                                    |
@@ -507,7 +507,7 @@ The sales person model represents a salesperson entity in the system. It has a f
 
 # Sale
 
-The Sale model represents a sales record in the system, which captures information about a specific sale, the automobile sold, person who made the sale, and customer who bought the automobile. It has foreign key relationships with AutomobileVO, Salesperson, and Customer. Each object is associated with one automobile, one salesperson and optionally one customer object.
+The `Sale` model represents a sales record in the system, which captures information about a specific sale, the automobile sold, person who made the sale, and customer who bought the automobile. It has foreign key relationships with `AutomobileVO`, `Salesperson`, and `Customer`. Each object is associated with one automobile, one salesperson and optionally one customer object.
 
 
 | Actions          | Method | URL                                    |
