@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+
 
 class VehicleModelList extends React.Component {
     constructor(props) {
@@ -38,7 +38,7 @@ class VehicleModelList extends React.Component {
                                 <tr key={model.id}>
                                     <td>{model.manufacturer.name}</td>
                                     <td>{model.name}</td>
-                                    <td><img style={{height:"100px", width:"200px"}} src={model.picture_url}/></td>
+                                    <td><img style={{height:"100px", width:"200px"}} src={model.picture_url} alt=""/></td>
                                 </tr>
                             )
                         })}
