@@ -1,4 +1,5 @@
 # CarCar
+CarCar is a web application that allows car dealerships to manage their inventory, service, and sales
 
 Team:
 
@@ -16,7 +17,7 @@ Team:
 
 ## Instructions to run the project
 
-1. Go to https://gitlab.com/charlene.xu92/project-beta for the repo.
+1. Go to https://gitlab.com/charlene.xu92/project-beta and Fork the Repository
 2. Select the Clone option and copy the URL under HTTPS.
 3. In your terminal, enter `cd` to your projects directory.
 4. Enter the command: `git clone https://gitlab.com/charlene.xu92/project-beta`.
@@ -488,7 +489,205 @@ In this example, the VIN is the same as the VIN in Inventory, so it should indic
 }
 ```
 
-## Sales microservice
+# Sales microservice
 
-Explain your models and integration with the inventory
-microservice, here.
+URL and port: http://localhost:8090/
+
+
+The Sales microservice is responsible for managing sales data, which includes sales persons, customers, sales records, and inventory of automobiles. This microservice is divided into two applications - Sales API and Sales Poller.
+
+Sales API is a Django-based application that hosts the models, URLs, and views. It is accessible through Insomnia on port 8090.
+
+Sales Poller is a polling application that periodically requests automobile data from the Inventory API. It creates a new instance of the automobileVO in the Sales microservice database for every instance of the Automobile in the Inventory database.
+
+## AutomobileVO (Value Object)
+
+The `AutomobileVO` model is a value object. It is used by the Sales microservice to poll  data such as VIN, Color, and year from the Inventory microservice. It is needed because that data are then used to create and manage sales of automobiles in the inventory. This also ensures that automobiles that are already sold in our inventory are not available for purchase on the Create a sale record form.
+
+
+## Customer
+
+The `Customer` model is a django model that represents a customer entity in the system. It has a foreign key relationship with the `Sale` model. Each sale object is associated with one customer object.
+
+| Actions          | Method | URL                                    |
+|------------------|--------|----------------------------------------|
+| List Customers   | `GET`    | http://localhost:8090/api/customers/   |
+| Create a Customer| `POST`   | http://localhost:8090/api/customers/   |
+
+- Sample `POST` request for create view =>
+
+```
+
+{
+	"name": "Steve Jobs",
+	"address": "1 Apple Park Way, Cupertino, CA 95014",
+	"phone_number": 5108521579
+}
+
+
+```
+
+- Sample `GET` for list view =>
+
+```
+[
+	{
+		"name": "Steve Jobs",
+	    "address": "1 Apple Park Way, Cupertino, CA 95014",
+	    "phone_number": 5108521579
+		"id": 1
+	},
+	{
+		"name": "Joe Biden",
+		"address": "1600 Pennsylvania Avenue NW, Washington, DC 20500",
+		"phone_number": 8081234567,
+		"id": 2
+	}
+]
+
+```
+
+
+
+### How to create a customer
+1. Navigate to http://localhost:3000/customers/new or Sales in the navigation bar and click Become a customer
+2. Input Name, Address, and Phone Number of customer
+3. Click Create, upon sucessful creation sucess message should show
+
+
+## Sales person
+
+The `Salesperson` model represents a salesperson entity in the system. It has a foreign key relationship with the `Sale` model . Each sale object is associated with one `Salesperson` object.
+
+
+| Actions          | Method | URL                                    |
+|------------------|--------|----------------------------------------|
+| List Sales People   | `GET`    | http://localhost:8090/api/salespeople/   |
+| Create a Sales Person | `POST`   | http://localhost:8090/api/salespeople/  |
+
+- Sample `POST` request for create view =>
+
+```
+
+{
+	"name": "Don Julio",
+	"employee_number": 1942
+}
+
+```
+
+- Sample `GET` request for list view =>
+```
+{
+	"salespersons": [
+		{
+			"name": "Don Julio",
+			"employee_number": 1942,
+			"id": 1
+		},
+		{
+			"name": "Remy Martin",
+			"employee_number": 1738,
+			"id": 2
+		}
+}
+
+```
+
+### How to create a new sales person
+1. Navigate to http://localhost:3000/salesperson/new or in the navigation bar click Sales then click Become a sales person
+2. Enter Name and Emplyee ID of sales person ***Note: Employee ID is max 5 digits.***
+3. Click create, upon successful creatiion success message should show
+
+
+# Sale
+
+The `Sale` model represents a sales record in the system, which captures information about a specific sale, the automobile sold, person who made the sale, and customer who bought the automobile. It has foreign key relationships with `AutomobileVO`, `Salesperson`, and `Customer`. Each object is associated with one automobile, one salesperson and optionally one customer object.
+
+
+| Actions          | Method | URL                                    |
+|------------------|--------|----------------------------------------|
+| List Sales Records   | `GET`    | http://localhost:8090/api/sales/   |
+| Sales person history | `GET` | http://localhost:8090/api/salesperson/:id/sales |
+| Create a Sales Record | `POST`   | http://localhost:8090/api/salesrecords/  |
+
+- Sample `POST` request for create view (Sales Records) =>
+
+```
+{
+	"sale_price": 50000,
+	"vin": "4T3ZF13C5YU267563",
+	"salesperson": 1,
+	"customer": 1
+}
+
+```
+
+- Sample `GET` request for list view (List Sales Records) =>
+
+```
+{
+	"sales": [
+		{
+			"salesperson": "Jack Nicholson",
+			"customer": "Kevin McCallister",
+			"vin": "JH4KA3250KC009863",
+			"sale_price": 50000,
+			"id": 3,
+			"employee_number": 1
+		},
+		{
+			"salesperson": "Jack Black",
+			"customer": "Jimmy Fallon",
+			"vin": "JH4DA3340HS032394",
+			"sale_price": 50000,
+			"id": 4,
+			"employee_number": 2
+		}
+  ]
+}
+
+```
+
+
+- Sample `GET` request for list view (Sales Person History) =>
+
+
+```
+[
+	{
+		"salesperson": "John Adams",
+		"customer": "James Bond",
+		"vin": "JH4DA3340HS032394",
+		"sale_price": 5000,
+		"id": 1,
+		"employee_number": 808
+	},
+	{
+		"salesperson": "John Adams",
+		"customer": "Edward Cullen",
+		"vin": "4T3ZF13C5YU267563",
+		"sale_price": 123,
+		"id": 2,
+		"employee_number": 808
+	}
+]
+```
+
+
+### How to create a new Sales Record
+1. Navigate to http://localhost:3000/sales/new or Sales in the navigation bar then click Create a new sales record. Alternatively you can navigate to http://localhost:3000/sales and click Create a Sale
+2. Select option in Choose an Automobile in which you would like to be sold ***Note: Automobiles which have already been sold will not appear in the dropdown. If no options appear you need to Create Automobile***
+3. Select option in Choose a Sales Person in which is selling the automobile  ***Note: If no options appear you need to create a sales person see How to create a new sales person.***
+4. Select option in Choose a Customer in which is buying the automobile ***Note: If no options appear you need to create a Customer see How to create a new customer.***
+5. Input sale price in USD
+6. Click Create, upon successful creation you will be redirected to the list of sales page (http://localhost:3000/sales)
+
+
+### How to view all sales
+1. Navigate to http://localhost:3000/sales or Click Sales in the navigation bar then click list of sales Salesperson history
+
+
+### How to view Sales Person history
+1. Navigate to http://localhost:3000/salesperson/history or Click sales in the navigation bar then click Salesperson history
+2. Select option in Choose a Salesperson to display all the sales that person has made
