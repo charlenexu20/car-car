@@ -7,7 +7,7 @@ Team:
 
 ## Design
 
-![Diagram](project-diagram.png)
+![Diagram](diagram.png)
 
 ![Network](docker-network.png)
 
