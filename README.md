@@ -399,6 +399,10 @@ The Appointment model is also an entity because it has a life cycle (active, can
 
 
 # Sales microservice
+
+URL and port: http://localhost:8090/
+
+
 The Sales microservice is responsible for managing sales data, which includes sales persons, customers, sales records, and inventory of automobiles. This microservice is divided into two applications - Sales API and Sales Poller.
 
 Sales API is a Django-based application that hosts the models, URLs, and views. It is accessible through Insomnia on port 8090.
