@@ -25,7 +25,7 @@ Team:
 6. Make sure you have your Docker Desktop installed and up.
 7. In your terminal, run following commands:
     ```
-    docker volume create project-beta
+    docker volume create beta-data
     docker-compose build
     docker-compose up
     ```
