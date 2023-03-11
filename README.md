@@ -366,7 +366,7 @@ The technician model is an entity and is used to create technician and get a lis
 {
 	"href": "/api/technicians/11/",
 	"technician_name": "Calanthe Melody",
-	"employee_number": 153440,
+	"employee_number": 15344,
 	"id": 11
 }
 ```
@@ -681,7 +681,7 @@ The `Sale` model represents a sales record in the system, which captures informa
 3. Select option in Choose a Sales Person in which is selling the automobile  ***Note: If no options appear you need to create a sales person see How to create a new sales person.***
 4. Select option in Choose a Customer in which is buying the automobile ***Note: If no options appear you need to create a Customer see How to create a new customer.***
 5. Input sale price in USD
-6. Click Create, upon successful creation you will be redirected to the list of sales page (http://localhost:3000/sales)
+6. Click Create, upon successful creation you will be redirected to the list of sales page (http://localhost:3000/sales) ***Note: Please allow at least 60 seconds for poller to refresh any newly created data such as new customer, new salesperson, new automobile in inventory etc. before creating new sales record***
 
 
 ### How to view all sales
